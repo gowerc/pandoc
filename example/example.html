@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>This is My Example File</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+// $(document).ready( function(){
+//     var obs = $("h1, h2, h3, h4, h5, h6") ;
+//     for (i = 0 ; i < obs.length ; i ++ ){
+//         var htmlid = obs[i].text()
+//         htmlid = htmlid.replace(/ /g, "-")
+//         htmlid = htmlid.toLowerCase()
+//         obs[i].html("<a href='#" + htmlid + "'>" + obs[i].text() + "</a>")   
+//     }
+// })
+
+</script>
+
+<style>
+/*
+    Buttondown
+    A Markdown/MultiMarkdown/Pandoc HTML output CSS stylesheet
+    Author: Ryan Gray
+    Date: 15 Feb 2011
+    Revised: 21 Feb 2012
+   
+    General style is clean, with minimal re-definition of the defaults or 
+    overrides of user font settings. The body text and header styles are 
+    left alone except title, author and date classes are centered. A Pandoc TOC 
+    is not printed, URLs are printed after hyperlinks in parentheses. 
+    Block quotes are italicized. Tables are lightly styled with lines above 
+    and below the table and below the header with a boldface header. Code 
+    blocks are line wrapped. 
+
+    All elements that Pandoc and MultiMarkdown use should be listed here, even 
+    if the style is empty so you can easily add styling to anything.
+    
+    There are some elements in here for HTML5 output of Pandoc, but I have not 
+    gotten around to testing that yet.
+*/
+
+/* NOTES:
+
+    Stuff tried and failed:
+    
+    It seems that specifying font-family:serif in Safari will always use 
+    Times New Roman rather than the user's preferences setting.
+    
+    Making the font size different or a fixed value for print in case the screen 
+    font size is making the print font too big: Making font-size different for 
+    print than for screen causes horizontal lines to disappear in math when using 
+    MathJax under Safari.
+*/
+
+/* ---- Front Matter ---- */
+
+/* Pandoc header DIV. Contains .title, .author and .date. Comes before div#TOC. 
+   Only appears if one of those three are in the document.
+*/
+
+div#header, header
+    {
+    /* Put border on bottom. Separates it from TOC or body that comes after it. */
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 0.5em;
+    }
+
+.title /* Pandoc title header (h1.title) */
+    {
+    text-align: center;
+    }
+
+.author, .date /* Pandoc author(s) and date headers (h2.author and h3.date) */
+    {
+    text-align: center;
+    }
+
+/* Pandoc table of contents DIV when using the --toc option.
+   NOTE: this doesn't support Pandoc's --id-prefix option for #TOC and #header. 
+   Probably would need to use div[id$='TOC'] and div[id$='header'] as selectors.
+*/
+
+div#TOC, nav#TOC
+    {
+    /* Put border on bottom to separate it from body. */
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 0.5em;
+    }
+
+@media print
+    {
+    div#TOC, nav#TOC
+        {
+        /* Don't display TOC in print */
+        display: none;
+        }
+    }
+
+/* ---- Headers and sections ---- */
+
+h1, h2, h3, h4, h5, h6
+{
+    font-family: "Helvetica Neue", Helvetica, "Liberation Sans", Calibri, Arial, sans-serif; /* Sans-serif headers */
+
+    /* font-family: "Liberation Serif", "Georgia", "Times New Roman", serif; /* Serif headers */
+
+    page-break-after: avoid; /* Firefox, Chrome, and Safari do not support the property value "avoid" */
+}
+
+/* Pandoc with --section-divs option */
+
+div div, section section /* Nested sections */
+    {
+    margin-left: 2em; /* This will increasingly indent nested header sections */
+    }
+
+p {}
+
+blockquote
+    { 
+    font-style: italic;
+    }
+
+li /* All list items */
+    {
+    }
+
+li > p /* Loosely spaced list item */
+    {
+    margin-top: 1em; /* IE: lack of space above a <li> when the item is inside a <p> */
+    }
+
+ul /* Whole unordered list */
+    {
+    }
+
+ul li /* Unordered list item */
+    {
+    }
+
+ol /* Whole ordered list */
+    {
+    }
+
+ol li /* Ordered list item */
+    {
+    }
+
+hr {}
+
+/* ---- Some span elements --- */
+
+sub /* Subscripts. Pandoc: H~2~O */
+    {
+    }
+
+sup /* Superscripts. Pandoc: The 2^nd^ try. */
+    {
+    }
+    
+em /* Emphasis. Markdown: *emphasis* or _emphasis_ */
+    {
+    }
+    
+em > em /* Emphasis within emphasis: *This is all *emphasized* except that* */
+    {
+    font-style: normal;
+    }
+
+strong /* Markdown **strong** or __strong__ */
+    {
+    }
+
+/* ---- Links (anchors) ---- */
+
+a /* All links */
+    {
+    /* Keep links clean. On screen, they are colored; in print, they do nothing anyway. */
+    text-decoration: none;
+    }
+
+@media screen
+    {
+    a:hover
+        {
+        /* On hover, we indicate a bit more that it is a link. */
+        text-decoration: underline;
+        }
+    }
+
+@media print
+    {
+    a   {
+        /* In print, a colored link is useless, so un-style it. */
+        color: black;
+        background: transparent;
+        }
+        
+    a[href^="http://"]:after, a[href^="https://"]:after
+        {
+        /* However, links that go somewhere else, might be useful to the reader,
+           so for http and https links, print the URL after what was the link 
+           text in parens
+        */
+        content: " (" attr(href) ") ";
+        font-size: 90%;
+        }
+    }
+
+/* ---- Images ---- */
+
+img
+    {
+    /* Let it be inline left/right where it wants to be, but verticality make 
+       it in the middle to look nicer, but opinions differ, and if in a multi-line 
+       paragraph, it might not be so great. 
+    */
+    vertical-align: middle;
+    }
+
+div.figure /* Pandoc figure-style image */
+    {
+    /* Center the image and caption */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-style: italic;
+    }
+
+p.caption /* Pandoc figure-style caption within div.figure */
+    {
+    /* Inherits div.figure props by default */
+    }
+
+/* ---- Code blocks and spans ---- */
+
+pre, code 
+    {
+    background-color: #fdf7ee;
+    /* BEGIN word wrap */
+    /* Need all the following to word wrap instead of scroll box */
+    /* This will override the overflow:auto if present */
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    /* END word wrap */
+    }
+
+pre /* Code blocks */
+    {
+    /* Distinguish pre blocks from other text by more than the font with a background tint. */
+    padding: 0.5em; /* Since we have a background color */
+    border-radius: 5px; /* Softens it */
+    /* Give it a some definition */
+    border: 1px solid #aaa;
+    /* Set it off left and right, seems to look a bit nicer when we have a background */
+    margin-left:  0.5em;
+    margin-right: 0.5em;
+    }
+
+@media screen
+    {
+    pre
+        {
+        /* On screen, use an auto scroll box for long lines, unless word-wrap is enabled */
+        white-space: pre;
+        overflow: auto;
+        /* Dotted looks better on screen and solid seems to print better. */
+        border: 1px dotted #777;
+        }
+    }
+
+code /* All inline code spans */
+    {
+    }
+
+p > code, li > code /* Code spans in paragraphs and tight lists */
+    {
+    /* Pad a little from adjacent text */
+    padding-left:  2px;
+    padding-right: 2px;
+    }
+    
+li > p code /* Code span in a loose list */
+    {
+    /* We have room for some more background color above and below */
+    padding: 2px;
+    }
+
+/* ---- Math ---- */
+
+span.math /* Pandoc inline math default and --jsmath inline math */
+    {
+    /* Tried font-style:italic here, and it messed up MathJax rendering in some browsers. Maybe don't mess with at all. */
+    }
+    
+div.math /* Pandoc --jsmath display math */
+    {
+    }
+    
+span.LaTeX /* Pandoc --latexmathml math */
+    {
+    } 
+
+eq /* Pandoc --gladtex math */
+    {
+    } 
+
+/* ---- Tables ---- */
+
+/*  A clean textbook-like style with horizontal lines above and below and under 
+    the header. Rows highlight on hover to help scanning the table on screen.
+*/
+
+table
+    {
+    border-collapse: collapse;
+    border-spacing: 0; /* IE 6 */
+
+    border-bottom: 2pt solid #000;
+    border-top: 2pt solid #000; /* The caption on top will not have a bottom-border */
+
+    /* Center */
+    margin-left: auto;
+    margin-right: auto;
+    }
+    
+thead /* Entire table header */
+    {
+    border-bottom: 1pt solid #000;
+    background-color: #eee; /* Does this BG print well? */
+    }
+
+tr.header /* Each header row */
+    {
+    } 
+
+tbody /* Entire table  body */
+    {
+    }
+
+/* Table body rows */
+
+tr  {
+    }
+tr.odd:hover, tr.even:hover /* Use .odd and .even classes to avoid styling rows in other tables */
+    {
+    background-color: #eee;
+    }
+    
+/* Odd and even rows */
+tr.odd {}
+tr.even {}
+
+td, th /* Table cells and table header cells */
+    { 
+    vertical-align: top; /* Word */
+    vertical-align: baseline; /* Others */
+    padding-left:   0.5em;
+    padding-right:  0.5em;
+    padding-top:    0.2em;
+    padding-bottom: 0.2em;
+    }
+    
+/* Removes padding on left and right of table for a tight look. Good if thead has no background color*/
+/*
+tr td:last-child, tr th:last-child
+    {
+    padding-right: 0;
+    }
+tr td:first-child, tr th:first-child 
+    {
+    padding-left: 0;
+    }
+*/
+
+th /* Table header cells */
+    {
+    font-weight: bold; 
+    }
+
+tfoot /* Table footer (what appears here if caption is on top?) */
+    {
+    }
+
+caption /* This is for a table caption tag, not the p.caption Pandoc uses in a div.figure */
+    {
+    caption-side: top;
+    border: none;
+    font-size: 0.9em;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 0.3em; /* Good for when on top */
+    padding-bottom: 0.2em;
+    }
+
+/* ---- Definition lists ---- */
+
+dl /* The whole list */
+    {
+    border-top: 2pt solid black;
+    padding-top: 0.5em;
+    border-bottom: 2pt solid black;
+    }
+
+dt /* Definition term */
+    {
+    font-weight: bold;
+    }
+
+dd+dt /* 2nd or greater term in the list */
+    {
+    border-top: 1pt solid black;
+    padding-top: 0.5em;
+    }
+    
+dd /* A definition */
+    {
+    margin-bottom: 0.5em;
+    }
+
+dd+dd /* 2nd or greater definition of a term */
+    {
+    border-top: 1px solid black; /* To separate multiple definitions */
+    }
+    
+/* ---- Footnotes ---- */
+
+a.footnote, a.footnoteRef { /* Pandoc, MultiMarkdown footnote links */
+    font-size: small; 
+    vertical-align: text-top;
+}
+
+a[href^="#fnref"], a.reversefootnote /* Pandoc, MultiMarkdown, ?? footnote back links */
+    {
+    }
+
+@media print
+    {
+    a[href^="#fnref"], a.reversefootnote /* Pandoc, MultiMarkdown */
+        {
+        /* Don't display these at all in print since the arrow is only something to click on */
+        display: none;
+        }
+    }
+    
+div.footnotes /* Pandoc footnotes div at end of the document */
+    {
+    }
+    
+div.footnotes li[id^="fn"] /* A footnote item within that div */
+    {
+    }
+
+/* You can class stuff as "noprint" to not print. 
+   Useful since you can't set this media conditional inside an HTML element's 
+   style attribute (I think), and you don't want to make another stylesheet that 
+   imports this one and adds a class just to do this.
+*/
+
+@media print
+    {
+    .noprint
+        {
+        display:none;
+        }
+    }
+
+</style>
+
+<style>
+h1, h2, h3, h4 {
+    padding-top: 20px;
+    padding-bottom:10px;
+}
+
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+    line-height: 1.1;
+    color: #2fa4e7;
+  }
+  
+  h1, .h1 {
+    font-size: calc(1.375rem + 1.5vw);
+  }
+  
+  @media (min-width: 1200px) {
+    h1, .h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  h2, .h2 {
+    font-size: calc(1.325rem + 0.9vw);
+  }
+  
+  @media (min-width: 1200px) {
+    h2, .h2 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  h3, .h3 {
+    font-size: calc(1.3rem + 0.6vw);
+  }
+  
+  @media (min-width: 1200px) {
+    h3, .h3 {
+      font-size: 1.25rem;
+    }
+  }
+  
+  h4, .h4 {
+    font-size: calc(1.275rem + 0.3vw);
+  }
+  
+  @media (min-width: 1200px) {
+    h4, .h4 {
+      font-size: 1rem;
+    }
+  }
+  
+  h5, .h5 {
+    font-size: 1rem;
+  }
+  
+  h6, .h6 {
+    font-size: 1rem;
+  }
+  
+  p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+body {
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">This is My Example File</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#example-of-pandoc-markdown-syntax"><span class="toc-section-number">1</span> Example of Pandoc Markdown Syntax</a>
+<ul>
+<li><a href="#lists"><span class="toc-section-number">1.1</span> Lists</a></li>
+<li><a href="#code-highlighting"><span class="toc-section-number">1.2</span> Code Highlighting</a></li>
+<li><a href="#images"><span class="toc-section-number">1.3</span> Images</a></li>
+<li><a href="#tables"><span class="toc-section-number">1.4</span> Tables</a></li>
+<li><a href="#footnote"><span class="toc-section-number">1.5</span> Footnote</a></li>
+<li><a href="#unnumbered-section">Unnumbered section</a></li>
+<li><a href="#quotations"><span class="toc-section-number">1.6</span> Quotations</a></li>
+<li><a href="#line-rules"><span class="toc-section-number">1.7</span> Line Rules</a></li>
+<li><a href="#equations"><span class="toc-section-number">1.8</span> Equations</a>
+<ul>
+<li><a href="#arrays"><span class="toc-section-number">1.8.1</span> Arrays</a></li>
+<li><a href="#aligned"><span class="toc-section-number">1.8.2</span> Aligned</a></li>
+<li><a href="#inline"><span class="toc-section-number">1.8.3</span> Inline</a></li>
+<li><a href="#underbrace-coloring"><span class="toc-section-number">1.8.4</span> Underbrace + coloring</a></li>
+<li><a href="#text-above-equation"><span class="toc-section-number">1.8.5</span> Text above equation</a></li>
+<li><a href="#horizontal-spacing"><span class="toc-section-number">1.8.6</span> Horizontal Spacing</a></li>
+<li><a href="#vertical-spacing"><span class="toc-section-number">1.8.7</span> Vertical Spacing</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#a-section"><span class="toc-section-number">2</span> A section</a></li>
+<li><a href="#another-section"><span class="toc-section-number">3</span> Another Section</a>
+<ul>
+<li><a href="#a-sub-sect"><span class="toc-section-number">3.1</span> a sub sect</a></li>
+<li><a href="#another-sub-sect"><span class="toc-section-number">3.2</span> another sub sect</a></li>
+<li><a href="#yet-another-sub-sec"><span class="toc-section-number">3.3</span> yet another sub sec</a>
+<ul>
+<li><a href="#a-sub-sub-section"><span class="toc-section-number">3.3.1</span> a sub sub section</a></li>
+<li><a href="#another-sub-sub-section"><span class="toc-section-number">3.3.2</span> another sub sub section</a></li>
+<li><a href="#yet-another-sub-sub-section"><span class="toc-section-number">3.3.3</span> yet another sub sub section</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#yet-another-section"><span class="toc-section-number">4</span> yet another section</a></li>
+</ul>
+</nav>
+<pre><code>pandoc \
+    --toc \
+    --from markdown \
+    --to html \
+    --standalone \
+    --number-sections  \
+    --toc-depth=3  \
+    --css=test.css \
+    test.md  \
+    --output test.html</code></pre>
+<h1 data-number="1" id="example-of-pandoc-markdown-syntax"><span class="header-section-number">1</span> Example of Pandoc Markdown Syntax</h1>
+<h2 data-number="1.1" id="lists"><span class="header-section-number">1.1</span> Lists</h2>
+<ul>
+<li>A b c</li>
+<li>awdaj waofkawpk awdawd</li>
+<li>awdawda</li>
+</ul>
+<ol type="1">
+<li>awdaw</li>
+<li>wdawd awdaw awf awijgirojet</li>
+<li>egpoj afgagag</li>
+</ol>
+<h2 data-number="1.2" id="code-highlighting"><span class="header-section-number">1.2</span> Code Highlighting</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="cf">function</span>(y){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">x</span>(<span class="dv">6</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">x</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Species =</span> <span class="fu">as.factor</span>(Species))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test1():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(a)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> x:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div>
+<h2 data-number="1.3" id="images"><span class="header-section-number">1.3</span> Images</h2>
+<p><img src="./download.png" /></p>
+<h2 data-number="1.4" id="tables"><span class="header-section-number">1.4</span> Tables</h2>
+<table style="width:86%;">
+<caption>Here’s the caption. It, too, may span multiple lines.</caption>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 11%" />
+<col style="width: 22%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Centered Header</th>
+<th>Default Aligned</th>
+<th style="text-align: right;">Right Aligned</th>
+<th style="text-align: left;">Left Aligned</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">First</td>
+<td>row</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: left;">Example of a row that spans multiple lines.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Second</td>
+<td>row</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: left;">Here’s another one. Note the blank line between rows.</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+<br />
+<br />
+</p>
+<table>
+<caption>Demonstration of pipe table syntax.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Right</th>
+<th style="text-align: left;">Left</th>
+<th>Default</th>
+<th style="text-align: center;">Center</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">12</td>
+<td>12</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">123</td>
+<td style="text-align: left;">123</td>
+<td>123</td>
+<td style="text-align: center;">123</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">1</td>
+<td>1</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<h2 data-number="1.5" id="footnote"><span class="header-section-number">1.5</span> Footnote</h2>
+<p>Here is a footnote reference,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and another.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Also reusing a footnote<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>This paragraph won’t be part of the note, because it isn’t indented.</p>
+<h2 class="unnumbered" id="unnumbered-section">Unnumbered section</h2>
+<p>Some test</p>
+<h2 data-number="1.6" id="quotations"><span class="header-section-number">1.6</span> Quotations</h2>
+<blockquote>
+<p>We can use <code>&gt;</code> to quote text</p>
+</blockquote>
+<h2 data-number="1.7" id="line-rules"><span class="header-section-number">1.7</span> Line Rules</h2>
+<p>some test</p>
+<hr />
+<p>some more text</p>
+<hr />
+<p>some additional text</p>
+<h2 data-number="1.8" id="equations"><span class="header-section-number">1.8</span> Equations</h2>
+<h3 data-number="1.8.1" id="arrays"><span class="header-section-number">1.8.1</span> Arrays</h3>
+<p><span class="math display">\[
+\Sigma = 
+\begin{bmatrix}
+    \sigma^2_{11} &amp; \dots &amp; \dots \\
+    \sigma^2_{21} &amp; \sigma^2_{22} &amp; \dots \\
+    \sigma^2_{31} &amp; \sigma^2_{32} &amp; \sigma^2_{33}
+\end{bmatrix}
+\]</span></p>
+<h3 data-number="1.8.2" id="aligned"><span class="header-section-number">1.8.2</span> Aligned</h3>
+<p><span class="math display">\[
+\begin{split}
+A &amp; = \frac{\pi r^2}{2} \\
+ &amp; = \frac{1}{2} \pi r^2
+\end{split}
+\]</span></p>
+<h3 data-number="1.8.3" id="inline"><span class="header-section-number">1.8.3</span> Inline</h3>
+<p>Here is an inline equation <span class="math inline">\(x=\mu^2 + 5\)</span></p>
+<h3 data-number="1.8.4" id="underbrace-coloring"><span class="header-section-number">1.8.4</span> Underbrace + coloring</h3>
+<p><span class="math display">\[
+\underbrace{6x+2}_{\textcolor{red}{(1)}}
+\]</span></p>
+<h3 data-number="1.8.5" id="text-above-equation"><span class="header-section-number">1.8.5</span> Text above equation</h3>
+<p><span class="math display">\[
+A \stackrel{\text{sometext}}{=} 2^2 + x + \mu
+\]</span></p>
+<h3 data-number="1.8.6" id="horizontal-spacing"><span class="header-section-number">1.8.6</span> Horizontal Spacing</h3>
+<p><span class="math display">\[
+\begin{align*}
+f(x) &amp;= x^2\! +3x\! +2 \\
+f(x) &amp;= x^2+3x+2 \\
+f(x) &amp;= x^2\, +3x\, +2 \\
+f(x) &amp;= x^2\: +3x\: +2 \\
+f(x) &amp;= x^2\; +3x\; +2 \\
+f(x) &amp;= x^2\ +3x\ +2 \\
+f(x) &amp;= x^2\quad +3x\quad +2 \\
+f(x) &amp;= x^2\qquad +3x\qquad +2
+\end{align*}
+\]</span></p>
+<h3 data-number="1.8.7" id="vertical-spacing"><span class="header-section-number">1.8.7</span> Vertical Spacing</h3>
+<p><span class="math display">\[
+\begin{aligned}
+    T_{P} &amp;= K_{T}. \rho . n^{2}_{p} . D^{4}_{p} \\[1pt]
+    Q_{P} &amp;= K_{Q}. \rho . n^{2}_{p} . D^{5}_{p} \\[10pt]
+    N_{P} &amp;= K_{N}. \rho . n^{2}_{p} . D^{6}_{p} \\[20pt]
+    K_{P} &amp;= K_{K}. \rho . n^{2}_{p} . D^{7}_{p}
+\end{aligned}
+\]</span></p>
+<h1 data-number="2" id="a-section"><span class="header-section-number">2</span> A section</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus finibus est massa, ut blandit enim placerat sed. Sed scelerisque nisi eu efficitur facilisis. Duis pharetra dictum augue id interdum. Suspendisse posuere purus diam, quis tempor tortor dapibus sit amet. Duis placerat sem augue, nec pretium arcu mattis at. Praesent tempus venenatis diam, in tincidunt nibh sollicitudin at. Vivamus placerat diam ut nisl efficitur volutpat. Pellentesque ullamcorper dui id mauris tempus laoreet. In aliquam, ligula vel fermentum sollicitudin, libero lorem interdum mi, et facilisis diam magna vitae purus. Nulla facilisi. Phasellus magna purus, aliquet ac purus scelerisque, efficitur ultricies nunc. Quisque ac mi sit amet nisi mattis malesuada. Nullam scelerisque dui lectus, vel cursus orci laoreet semper. Mauris faucibus eu libero a consequat.</p>
+<p>Donec aliquet dui ac lacus facilisis mollis. Suspendisse et dignissim justo, euismod vehicula augue. Sed sit amet finibus eros, ut imperdiet nulla. Nulla facilisi. In luctus neque vel tristique convallis. Curabitur sed nulla tempor, viverra purus et, cursus lorem. Donec porta turpis nulla, vel luctus ex faucibus eu. Quisque ligula nulla, sagittis non erat nec, semper auctor leo. Sed eu turpis nec ante lobortis pretium sit amet sed diam. Nullam sed risus a lorem sollicitudin rhoncus id maximus ligula. In quis dolor id velit scelerisque posuere.</p>
+<h1 data-number="3" id="another-section"><span class="header-section-number">3</span> Another Section</h1>
+<h2 data-number="3.1" id="a-sub-sect"><span class="header-section-number">3.1</span> a sub sect</h2>
+<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. In pretium, ante ac aliquam malesuada, turpis turpis sodales libero, ac auctor sem nibh et dolor. Curabitur rhoncus lobortis libero, eu posuere leo porttitor eget. Nulla ac turpis odio. Etiam mollis finibus urna sed mollis. Suspendisse ac quam mi. Nunc quis nulla non massa suscipit dictum. Maecenas quis odio efficitur, sollicitudin velit ut, dapibus velit. Pellentesque id tortor et turpis consequat hendrerit a vel magna. Proin auctor tincidunt nulla eu eleifend. Aenean sed tortor magna. Nulla non turpis et leo ultrices aliquam. Donec non mi leo.</p>
+<h2 data-number="3.2" id="another-sub-sect"><span class="header-section-number">3.2</span> another sub sect</h2>
+<p>Etiam ut ex nunc. Vivamus luctus quam vel tincidunt imperdiet. Aliquam varius quam ut pharetra efficitur. Donec tempor nisi id elementum dapibus. Sed erat nisl, rutrum eu neque congue, imperdiet porta turpis. Praesent sed augue id sapien porttitor varius ac id neque. Fusce gravida quis leo ac fermentum. Etiam mauris augue, accumsan eget luctus eget, laoreet quis magna. Vestibulum bibendum ex vel est mollis, vitae dictum quam viverra. Phasellus lacinia sem sem, interdum tincidunt dolor varius sed. Suspendisse ac purus eu ligula dignissim cursus. Aliquam interdum arcu leo, ac congue turpis viverra nec. Donec ac mi nec augue efficitur pharetra id a sem. Aenean vitae diam suscipit, aliquet augue quis, dictum tortor.</p>
+<h2 data-number="3.3" id="yet-another-sub-sec"><span class="header-section-number">3.3</span> yet another sub sec</h2>
+<p>Sed quis tempus tellus. Duis sed leo id velit laoreet aliquam. Duis non elementum nunc, fringilla imperdiet ex. Vivamus scelerisque consectetur urna, vel cursus ex aliquam a. Curabitur hendrerit tortor felis, id luctus elit facilisis eu. Quisque a sollicitudin ex. Sed ultrices, metus sit amet molestie ultrices, dolor libero viverra dui, sed ullamcorper urna neque nec enim. Praesent at leo odio. Aliquam posuere vestibulum orci sit amet efficitur.</p>
+<h3 data-number="3.3.1" id="a-sub-sub-section"><span class="header-section-number">3.3.1</span> a sub sub section</h3>
+<p>Sed quis tempus tellus. Duis sed leo id velit laoreet aliquam. Duis non elementum nunc, fringilla imperdiet ex. Vivamus scelerisque consectetur urna, vel cursus ex aliquam a. Curabitur hendrerit tortor felis, id luctus elit facilisis eu. Quisque a sollicitudin ex. Sed ultrices, metus sit amet molestie ultrices, dolor libero viverra dui, sed ullamcorper urna neque nec enim. Praesent at leo odio. Aliquam posuere vestibulum orci sit amet efficitur.</p>
+<h3 data-number="3.3.2" id="another-sub-sub-section"><span class="header-section-number">3.3.2</span> another sub sub section</h3>
+<p>Sed quis tempus tellus. Duis sed leo id velit laoreet aliquam. Duis non elementum nunc, fringilla imperdiet ex. Vivamus scelerisque consectetur urna, vel cursus ex aliquam a. Curabitur hendrerit tortor felis, id luctus elit facilisis eu. Quisque a sollicitudin ex. Sed ultrices, metus sit amet molestie ultrices, dolor libero viverra dui, sed ullamcorper urna neque nec enim. Praesent at leo odio. Aliquam posuere vestibulum orci sit amet efficitur.</p>
+<h3 data-number="3.3.3" id="yet-another-sub-sub-section"><span class="header-section-number">3.3.3</span> yet another sub sub section</h3>
+<p>Sed quis tempus tellus. Duis sed leo id velit laoreet aliquam. Duis non elementum nunc, fringilla imperdiet ex. Vivamus scelerisque consectetur urna, vel cursus ex aliquam a. Curabitur hendrerit tortor felis, id luctus elit facilisis eu. Quisque a sollicitudin ex. Sed ultrices, metus sit amet molestie ultrices, dolor libero viverra dui, sed ullamcorper urna neque nec enim. Praesent at leo odio. Aliquam posuere vestibulum orci sit amet efficitur.</p>
+<h1 data-number="4" id="yet-another-section"><span class="header-section-number">4</span> yet another section</h1>
+<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. In pretium, ante ac aliquam malesuada, turpis turpis sodales libero, ac auctor sem nibh et dolor. Curabitur rhoncus lobortis libero, eu posuere leo porttitor eget. Nulla ac turpis odio. Etiam mollis finibus urna sed mollis. Suspendisse ac quam mi. Nunc quis nulla non massa suscipit dictum. Maecenas quis odio efficitur, sollicitudin velit ut, dapibus velit. Pellentesque id tortor et turpis consequat hendrerit a vel magna. Proin auctor tincidunt nulla eu eleifend. Aenean sed tortor magna. Nulla non turpis et leo ultrices aliquam. Donec non mi leo.</p>
+<p>Etiam ut ex nunc. Vivamus luctus quam vel tincidunt imperdiet. Aliquam varius quam ut pharetra efficitur. Donec tempor nisi id elementum dapibus. Sed erat nisl, rutrum eu neque congue, imperdiet porta turpis. Praesent sed augue id sapien porttitor varius ac id neque. Fusce gravida quis leo ac fermentum. Etiam mauris augue, accumsan eget luctus eget, laoreet quis magna. Vestibulum bibendum ex vel est mollis, vitae dictum quam viverra. Phasellus lacinia sem sem, interdum tincidunt dolor varius sed. Suspendisse ac purus eu ligula dignissim cursus. Aliquam interdum arcu leo, ac congue turpis viverra nec. Donec ac mi nec augue efficitur pharetra id a sem. Aenean vitae diam suscipit, aliquet augue quis, dictum tortor.</p>
+<p>Sed quis tempus tellus. Duis sed leo id velit laoreet aliquam. Duis non elementum nunc, fringilla imperdiet ex. Vivamus scelerisque consectetur urna, vel cursus ex aliquam a. Curabitur hendrerit tortor felis, id luctus elit facilisis eu. Quisque a sollicitudin ex. Sed ultrices, metus sit amet molestie ultrices, dolor libero viverra dui, sed ullamcorper urna neque nec enim. Praesent at leo odio. Aliquam posuere vestibulum orci sit amet efficitur.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Here is the footnote.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Here’s one with multiple blocks.</p>
+<p>Subsequent paragraphs are indented to show that they belong to the previous footnote.</p>
+<pre><code>{ some.code }</code></pre>
+<p>The whole paragraph can be indented, or just the first line. In this way, multi-paragraph footnotes work like multi-paragraph list items.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Here is the footnote.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>
