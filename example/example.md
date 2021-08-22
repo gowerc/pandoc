@@ -17,7 +17,6 @@ pandoc \
 ```
 
 
-
 # Example of Pandoc Markdown Syntax
 
 
@@ -86,8 +85,7 @@ Table: Here's the caption. It, too, may span
 multiple lines.
 
 \
-\
-\
+\   
 
 
 | Right | Left | Default | Center |
@@ -156,6 +154,7 @@ $$
     \sigma^2_{31} & \sigma^2_{32} & \sigma^2_{33}
 \end{bmatrix}
 $$
+
 
 ### Aligned
 
